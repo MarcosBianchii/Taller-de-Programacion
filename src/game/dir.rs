@@ -3,7 +3,7 @@ use std::fmt::{Display, Formatter};
 
 /// Enum que representa una direccion
 /// para los Obj::Detour.
-#[derive(Clone, Copy)]
+#[derive(Clone)]
 pub enum Dir {
     Up,
     Down,
@@ -39,8 +39,8 @@ impl Display for Dir {
 }
 
 impl Dir {
-    /// Funcion que devuelve un punto habiendo
-    /// sido movido en direccion self.
+    /// Funcion que devuelve un punto
+    /// movido en dirección self.
     pub fn move_pos(&self, pos: (i8, i8)) -> (i8, i8) {
         match self {
             Dir::Up => (pos.0, pos.1 - 1),

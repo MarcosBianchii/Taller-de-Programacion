@@ -18,7 +18,7 @@ pub enum Obj {
 
 impl From<&str> for Obj {
     fn from(string: &str) -> Self {
-        let to_u8 = |c: char| c as u8 - '0' as u8;
+        let to_u8 = |c: char| c as u8 - b'0';
         let x = string.chars().nth(0);
         let y = string.chars().nth(1);
 
