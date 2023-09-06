@@ -13,6 +13,7 @@ fn fmt_output(input: &String, output: &String) -> String {
     }
 }
 
+#[allow(dead_code)]
 /// Procedimiento que escribe un String al path output.
 fn write_to_file(output: &String, s: String) -> io::Result<()> {
     let f = File::create(output)?;
@@ -20,17 +21,19 @@ fn write_to_file(output: &String, s: String) -> io::Result<()> {
 }
 
 fn main() -> io::Result<()> {
+    std::env::set_var("RUST_BACKTRACE", "1");
+
     let args: Vec<String> = std::env::args().collect();
-    if args.len() < 4 {
+    if args.len() < 5 {
         eprintln!("Uso: <input_file> <output_dir> X Y");
         return Ok(());
     }
 
-    let input = &args[0];
-    let output = fmt_output(&input, &args[1]);
+    let input = &args[1];
+    let output = fmt_output(&input, &args[2]);
 
     let parse = |s: &String| s.parse::<i8>();
-    let (x, y) = match (parse(&args[2]), parse(&args[3])) {
+    let (x, y) = match (parse(&args[3]), parse(&args[4])) {
         (Ok(a), Ok(b)) => (a, b),
         _ => (-1, -1),
     };
