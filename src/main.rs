@@ -20,8 +20,6 @@ fn write_to_file(output: &str, s: String) -> io::Result<()> {
 }
 
 fn main() -> io::Result<()> {
-    std::env::set_var("RUST_BACKTRACE", "1");
-
     let args: Vec<String> = std::env::args().collect();
     if args.len() < 5 {
         eprintln!("Uso: <input_file> <output_dir> X Y");

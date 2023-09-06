@@ -1,8 +1,8 @@
 use std::fmt;
 use std::fmt::{Display, Formatter};
 
-/// Enum que representa una direccion
-/// para los Obj::Detour.
+/// Enum que representa un
+/// sentido de dirección.
 #[derive(Clone)]
 pub enum Dir {
     Up,

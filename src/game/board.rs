@@ -58,7 +58,6 @@ impl Board {
                 game.board.insert((j as i8, i as i8), Obj::from(obj));
             }
 
-            // Guarda el n para poder formatear el tablero al guardarlo.
             game.n = u8::max(1 + game.n, i as u8);
         }
 
@@ -116,7 +115,7 @@ impl Board {
         mut dir: Dir,
     ) {
         // Si estamos fuera de rango del tablero o
-        // se termino el rango de la bomba retorna.
+        // se terminó el rango de la bomba retorna.
         if self.out_of_bounds(&pos) || range < 0 {
             return;
         }
