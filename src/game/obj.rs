@@ -1,13 +1,18 @@
 use std::fmt;
 use std::fmt::{Display, Formatter};
 
+use super::dir::Dir;
+
+/// Enum que representa un tipo de
+/// objeto o "pieza" en el tablero
+/// del juego.
 pub enum Obj {
     Enemy(u8),
     Bomb(u8),
     BreakBomb(u8),
     Rock,
     Wall,
-    Detour(char),
+    Detour(Dir),
     Empty,
 }
 
@@ -21,7 +26,7 @@ impl From<&str> for Obj {
             (Some('F'), Some(hp)) => Obj::Enemy(to_u8(hp)),
             (Some('B'), Some(range)) => Obj::Bomb(to_u8(range)),
             (Some('S'), Some(range)) => Obj::BreakBomb(to_u8(range)),
-            (Some('D'), Some(dir)) => Obj::Detour(dir),
+            (Some('D'), Some(dir)) => Obj::Detour(Dir::from(dir)),
             (Some('R'), _) => Obj::Rock,
             (Some('W'), _) => Obj::Wall,
             _ => Obj::Empty,
