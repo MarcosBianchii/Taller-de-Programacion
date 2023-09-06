@@ -26,11 +26,11 @@ Una posición puede contener uno de los siguientes objetos (o en su defecto esta
 
 Las bombas pueden ser de diferentes tipos:
 
-1. **Normales**: simplemente detonan en direcciones verticales y horizontales (arriba, abajo, derecha e izquierda). Si se encuentran con una roca o una pared, la ráfaga es bloqueada.
+* **Normales**: simplemente detonan en direcciones verticales y horizontales (arriba, abajo, derecha e izquierda). Si se encuentran con una roca o una pared, la ráfaga es bloqueada.
 
-En el juego original, las bombas de traspaso destruyen las rocas al ser alcanzadas por su rafaga. Para simplificar nuestro modelo, nuestras bombas normales no destruiran las rocas.
+    * En el juego original, las bombas de traspaso destruyen las rocas al ser alcanzadas por su rafaga. Para simplificar nuestro modelo, nuestras bombas normales no destruiran las rocas.
 
-1. **De traspaso**: las bombas de traspaso funcionan igual que las normales, con la diferencia de que su rafaga puede atravesar rocas sin perder alcance.
+* **De traspaso**: las bombas de traspaso funcionan igual que las normales, con la diferencia de que su rafaga puede atravesar rocas sin perder alcance.
 En el juego original, las bombas de traspaso destruyen las rocas al ser alcanzadas por su rafaga. Para simplificar nuestro modelo, nuestras bombas de traspaso solo atravesaran la roca (sin destruirla).
 
 ### Formato del laberinto
@@ -41,16 +41,16 @@ Para identificar cada objeto se utilizará la siguiente convención (X,Y) donde:
 
 * **X** sera el objeto: Enemigo [F], Bomba normal [B], Bomba de traspaso [S], Roca [R], Pared [W], Desvio [D].
 * **Y** sera (si corresponde):
-    1. En caso del Enemigo, sus puntos de vida.
-    1. En caso de la Bomba, el alcance de su rafaga.
-    1. En caso del Desvio, la dirección a la que se desvia la rafaga: Izquierda [L], Derecha [R], Arriba [U], Abajo [D].
+    * En caso del Enemigo, sus puntos de vida.
+    * En caso de la Bomba, el alcance de su rafaga.
+    * En caso del Desvio, la dirección a la que se desvia la rafaga: Izquierda [L], Derecha [R], Arriba [U], Abajo [D].
 Cualquier casilla vacia sera representada con guion bajo [_].
 
 ## Ejemplos
 
 #### Ejemplo 1
 
-```console
+```
 B2 R R _ F1 _ _
 _ W R W _ W _
 B5 _ _ _ B2 _ _
@@ -65,7 +65,7 @@ Si detonamos la bomba en la coordenada (0, 0), que posee un alcance de 2, la raf
 
 Finalmente, el escenario resultante sera:
 
-```console
+```
 _ R R _ _ _ _
 _ W R W _ W _
 _ _ _ _ _ _ _
@@ -77,7 +77,7 @@ _ _ _ _ _ _ _
 
 #### Ejemplo 2
 
-```console
+```
 _ _ B2 _ B1 _ _
 _ W _ W _ W _
 _ _ B2 R F1 _ _
@@ -99,7 +99,7 @@ Donde:
 
 Finalmente, el escenario resultante sera:
 
-```console
+```
 _ _ _ _ _ _ _
 _ W _ W _ W _
 _ _ _ R F1 _ _
@@ -111,7 +111,7 @@ _ _ _ _ _ _ B1
 
 #### Ejemplo 3
 
-```console
+```
 _ _ _ _ _ _ _
 _ W _ W _ W _
 S4 R R R F2 _ _
@@ -132,7 +132,7 @@ Donde:
 
 Finalmente, el escenario resultante sera:
 
-```console
+```
 _ _ _ _ _ _ _
 _ W _ W _ W _
 _ R R R _ _ _
