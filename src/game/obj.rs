@@ -4,8 +4,7 @@ use std::fmt::{Display, Formatter};
 use super::dir::Dir;
 
 /// Enum que representa un tipo de
-/// objeto o "pieza" en el tablero
-/// del juego.
+/// objeto o "pieza" en el tablero.
 pub enum Obj {
     Enemy(u8),
     Bomb(u8),
