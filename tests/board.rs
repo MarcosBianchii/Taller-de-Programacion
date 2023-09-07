@@ -45,3 +45,11 @@ fn complete_example_3() {
     board.pop((0, 4));
     assert_eq!(s, board.to_string());
 }
+
+#[test]
+fn complete_example_custom() {
+    let mut board = Board::new("tests/boards/custom.txt").unwrap();
+    let s = read_to_string("tests/boards/customR.txt").unwrap();
+    board.pop((0, 0));
+    assert_eq!(s, board.to_string());
+}

@@ -12,9 +12,9 @@ pub enum Dir {
     None,
 }
 
-impl From<char> for Dir {
-    fn from(c: char) -> Self {
-        match c.to_uppercase().nth(0) {
+impl From<&str> for Dir {
+    fn from(c: &str) -> Self {
+        match c.to_uppercase().chars().next() {
             Some('U') => Dir::Up,
             Some('D') => Dir::Down,
             Some('L') => Dir::Left,
