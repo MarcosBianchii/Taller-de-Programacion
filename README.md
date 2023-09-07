@@ -2,8 +2,6 @@
 
 > La R es de Rust...
 
-*Fecha de entrega: 19 de Septiembre de 2023*
-
 ### Contexto
 
 [Bomberman](https://es.wikipedia.org/wiki/Bomberman) es una franquicia de videojuegos originalmente desarrollada por Hudson Soft en 1983 para PC, y posteriormente para Famicon. Esta franquicia ha tenido un gran éxito en Japon, aunque este no es tan grande en Occidente. Bomberman ha sido la mascota de Hudson Soft a lo largo de toda su historia, hasta su absorción por parte de Konami en 2012.
