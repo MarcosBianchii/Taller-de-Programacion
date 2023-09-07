@@ -24,15 +24,11 @@ impl Display for Board {
         let mut items = Vec::from_iter(self.board.iter());
         items.sort_by_key(|(pos, _)| pos.0 + pos.1 * self.n as i8);
 
-        items.iter().for_each(|((j, _), obj)| {
-            let fmtobj = obj.to_string();
-            output_str.push_str(format!("{fmtobj}").as_str());
-            if *j == self.n as i8 - 1 {
-                output_str.push('\n');
-            } else {
-                output_str.push(' ');
-            }
-        });
+        for (pos, obj) in items {
+            let fmtobj = format!("{}", obj.to_string());
+            output_str.push_str(fmtobj.as_str());
+            output_str.push(if pos.0 == self.n as i8 - 1 { '\n' } else { ' ' });
+        }
 
         write!(f, "{}", output_str)
     }
@@ -63,8 +59,8 @@ impl Board {
     }
 
     /// Guarda el tablero el path output.
-    pub fn save(&self, output: &str) -> Result<(), String> {
-        let f = match File::create(output) {
+    pub fn save(&self, path: &str) -> Result<(), String> {
+        let f = match File::create(path) {
             Err(_) => return Err("ERROR: Output is invalid".to_string()),
             Ok(file) => file,
         };
