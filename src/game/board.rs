@@ -35,6 +35,15 @@ impl Display for Board {
 }
 
 impl Board {
+    /// Validates that n is an integer.
+    fn validate_n(n: f32) -> Result<u8, String> {
+        if n != n.round() {
+            return Err("ERROR: Board shape is not squared".to_string());
+        }
+
+        Ok(n as u8)
+    }
+
     /// Instancia un tablero desde un archivo.
     pub fn new(input: &str) -> Result<Board, String> {
         let file = match read_to_string(input) {
@@ -43,7 +52,6 @@ impl Board {
         };
 
         let mut board = BoardMap::new();
-        let mut n = 0;
 
         // Itera las lineas del archivo separando por espacios
         // para obtener los objetos y sus coordenadas.
@@ -51,14 +59,14 @@ impl Board {
             for (j, obj) in line.split_whitespace().enumerate() {
                 board.insert((j as i8, i as i8), Obj::from(obj));
             }
-
-            n = u8::max(1 + n, i as u8);
         }
 
+        // Validate sqrt(n) is int.
+        let n = Self::validate_n((board.len() as f32).sqrt())?;
         Ok(Board { board, n })
     }
 
-    /// Guarda el tablero el path output.
+    /// Guarda el tablero en path.
     pub fn save(&self, path: &str) -> Result<(), String> {
         let f = match File::create(path) {
             Err(_) => return Err("ERROR: Output is invalid".to_string()),
@@ -78,19 +86,17 @@ impl Board {
 
     /// Procedimiento que ejecuta la interacción entre una bomba y otro objeto.
     fn obj_interact(&mut self, bomb: &Obj, pos: (i8, i8), dir: &mut Dir) -> Option<()> {
-        if let Some(cur_cell) = self.board.get_mut(&pos) {
-            match (bomb, cur_cell) {
-                (Obj::BreakBomb(_), Obj::Rock) => (),
+        if let Some(mut cur_cell) = self.board.get_mut(&pos) {
+            match (bomb, &mut cur_cell) {
                 (Obj::Bomb(_), Obj::Rock) => return None,
+                (Obj::BreakBomb(_), Obj::Rock) => (),
                 (_, Obj::Bomb(_) | Obj::BreakBomb(_)) => self.pop(pos),
-                (_, Obj::Detour(new_dir)) => *dir = new_dir.clone(),
                 (_, Obj::Wall) => return None,
-                (_, Obj::Enemy(hp)) => {
-                    *hp -= 1;
-                    if *hp == 0 {
-                        self.board.insert(pos, Obj::Empty);
-                    }
-                }
+                (_, Obj::Detour(new_dir)) => *dir = new_dir.clone(),
+                (_, Obj::Enemy(hp)) => match hp {
+                    1 => *cur_cell = Obj::Empty,
+                    _ => *hp -= 1,
+                },
                 (_, _) => (),
             }
         }
