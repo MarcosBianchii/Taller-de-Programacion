@@ -17,22 +17,19 @@ pub enum Obj {
 
 impl From<&str> for Obj {
     fn from(string: &str) -> Self {
-        let x = string.chars().next();
-        let y = &string[1..];
-
-        let parse_u8 = |s: &str| match s.parse::<u8>() {
-            Ok(num) => num,
-            Err(_) => 0,
-        };
-
-        match (x, y) {
-            (Some('F'), hp) => Obj::Enemy(parse_u8(hp)),
-            (Some('B'), range) => Obj::Bomb(parse_u8(range)),
-            (Some('S'), range) => Obj::BreakBomb(parse_u8(range)),
-            (Some('D'), dir) => Obj::Detour(Dir::from(dir)),
-            (Some('R'), _) => Obj::Rock,
-            (Some('W'), _) => Obj::Wall,
-            _ => Obj::Empty,
+        let parse_u8 = |s: &str| s.parse::<u8>().unwrap_or(0);
+        if let Some(x) = string.chars().next() {
+            match (x, &string[1..]) {
+                ('F', hp) => Obj::Enemy(parse_u8(hp)),
+                ('B', range) => Obj::Bomb(parse_u8(range)),
+                ('S', range) => Obj::BreakBomb(parse_u8(range)),
+                ('D', dir) => Obj::Detour(Dir::from(dir)),
+                ('R', _) => Obj::Rock,
+                ('W', _) => Obj::Wall,
+                _ => Obj::Empty,
+            }
+        } else {
+            Obj::Empty
         }
     }
 }

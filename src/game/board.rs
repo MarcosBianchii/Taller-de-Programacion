@@ -25,17 +25,17 @@ impl Display for Board {
         items.sort_by_key(|(pos, _)| pos.0 + pos.1 * self.n as i8);
 
         for (pos, obj) in items {
-            let fmtobj = format!("{}", obj.to_string());
+            let fmtobj = format!("{obj}");
             output_str.push_str(fmtobj.as_str());
             output_str.push(if pos.0 == self.n as i8 - 1 { '\n' } else { ' ' });
         }
 
-        write!(f, "{}", output_str)
+        write!(f, "{output_str}")
     }
 }
 
 impl Board {
-    /// Validates that n is an integer.
+    /// Valida que n es entero.
     fn validate_n(n: f32) -> Result<u8, String> {
         if n != n.round() {
             return Err("ERROR: Board shape is not squared".to_string());
@@ -52,7 +52,6 @@ impl Board {
         };
 
         let mut board = BoardMap::new();
-
         // Itera las lineas del archivo separando por espacios
         // para obtener los objetos y sus coordenadas.
         for (i, line) in file.lines().enumerate() {
@@ -61,7 +60,7 @@ impl Board {
             }
         }
 
-        // Validate sqrt(n) is int.
+        // Valida que n es potencia de un entero.
         let n = Self::validate_n((board.len() as f32).sqrt())?;
         Ok(Board { board, n })
     }
@@ -88,11 +87,11 @@ impl Board {
     fn obj_interact(&mut self, bomb: &Obj, pos: (i8, i8), dir: &mut Dir) -> Option<()> {
         if let Some(mut cur_cell) = self.board.get_mut(&pos) {
             match (bomb, &mut cur_cell) {
-                (Obj::Bomb(_), Obj::Rock) => return None,
                 (Obj::BreakBomb(_), Obj::Rock) => (),
-                (_, Obj::Bomb(_) | Obj::BreakBomb(_)) => self.pop(pos),
-                (_, Obj::Wall) => return None,
+                (Obj::Bomb(_), Obj::Rock) => return None,
+                (_, Obj::BreakBomb(_) | Obj::Bomb(_)) => self.pop(pos),
                 (_, Obj::Detour(new_dir)) => *dir = new_dir.clone(),
+                (_, Obj::Wall) => return None,
                 (_, Obj::Enemy(hp)) => match hp {
                     1 => *cur_cell = Obj::Empty,
                     _ => *hp -= 1,

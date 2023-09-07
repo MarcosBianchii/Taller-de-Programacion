@@ -22,7 +22,7 @@ fn write_to_file(output: &str, s: &str) -> io::Result<()> {
 fn main() -> io::Result<()> {
     let args: Vec<String> = std::env::args().collect();
     if args.len() < 5 {
-        eprintln!("Uso: <input_file> <output_dir> X Y");
+        eprintln!("Use: <input_file> <output_dir> X Y");
         return Ok(());
     }
 
@@ -41,7 +41,6 @@ fn main() -> io::Result<()> {
     };
 
     board.pop((x, y));
-
     match board.save(&output) {
         Err(e) => write_to_file(&output, &e),
         Ok(_) => Ok(()),
