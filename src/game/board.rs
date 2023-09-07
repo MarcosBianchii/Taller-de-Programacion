@@ -15,7 +15,6 @@ type BoardMap = HashMap<(i8, i8), Obj>;
 /// del juego dentro del programa.
 pub struct Board {
     board: BoardMap,
-    output: String,
     n: u8,
 }
 
@@ -27,9 +26,11 @@ impl Display for Board {
 
         items.iter().for_each(|((j, _), obj)| {
             let fmtobj = obj.to_string();
-            output_str.push_str(format!("{fmtobj} ").chars().as_str());
+            output_str.push_str(format!("{fmtobj}").as_str());
             if *j == self.n as i8 - 1 {
                 output_str.push('\n');
+            } else {
+                output_str.push(' ');
             }
         });
 
@@ -38,35 +39,32 @@ impl Display for Board {
 }
 
 impl Board {
-    /// Instancia un tablero desde un archivo y su ruta a ser guardado.
-    pub fn new(input: &str, output: &str) -> Result<Board, String> {
+    /// Instancia un tablero desde un archivo.
+    pub fn new(input: &str) -> Result<Board, String> {
         let file = match read_to_string(input) {
             Err(_) => return Err(format!("ERROR: file not found <{input}>")),
             Ok(content) => content,
         };
 
-        let mut game = Board {
-            board: BoardMap::new(),
-            output: output.to_owned(),
-            n: 0,
-        };
+        let mut board = BoardMap::new();
+        let mut n = 0;
 
         // Itera las lineas del archivo separando por espacios
         // para obtener los objetos y sus coordenadas.
         for (i, line) in file.lines().enumerate() {
             for (j, obj) in line.split_whitespace().enumerate() {
-                game.board.insert((j as i8, i as i8), Obj::from(obj));
+                board.insert((j as i8, i as i8), Obj::from(obj));
             }
 
-            game.n = u8::max(1 + game.n, i as u8);
+            n = u8::max(1 + n, i as u8);
         }
 
-        Ok(game)
+        Ok(Board { board, n })
     }
 
-    /// Guarda el tablero en su path de output.
-    pub fn save(&self) -> Result<(), String> {
-        let f = match File::create(&self.output) {
+    /// Guarda el tablero el path output.
+    pub fn save(&self, output: &str) -> Result<(), String> {
+        let f = match File::create(output) {
             Err(_) => return Err("ERROR: Output is invalid".to_string()),
             Ok(file) => file,
         };

@@ -35,14 +35,14 @@ fn main() -> io::Result<()> {
         _ => return write_to_file(&output, "ERROR: Either x or y are not numbers".to_string()),
     };
 
-    let mut board = match Board::new(input, &output) {
+    let mut board = match Board::new(input) {
         Err(e) => return write_to_file(&output, e),
         Ok(board) => board,
     };
 
     board.pop((x, y));
 
-    match board.save() {
+    match board.save(&output) {
         Err(e) => write_to_file(&output, e),
         Ok(_) => Ok(()),
     }

@@ -47,7 +47,7 @@ impl Dir {
             Dir::Down => (pos.0, pos.1 + 1),
             Dir::Left => (pos.0 - 1, pos.1),
             Dir::Right => (pos.0 + 1, pos.1),
-            Dir::None => (-1, -1),
+            Dir::None => pos,
         }
     }
 }
