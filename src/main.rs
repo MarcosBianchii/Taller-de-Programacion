@@ -14,7 +14,7 @@ fn fmt_output(input: &str, output: &String) -> String {
 }
 
 /// Procedimiento que escribe un String al path output.
-fn write_to_file(output: &str, s: String) -> io::Result<()> {
+fn write_to_file(output: &str, s: &str) -> io::Result<()> {
     let f = File::create(output)?;
     BufWriter::new(f).write_all(s.as_bytes())
 }
@@ -32,18 +32,18 @@ fn main() -> io::Result<()> {
     let parse = |s: &String| s.parse::<i8>();
     let (x, y) = match (parse(&args[3]), parse(&args[4])) {
         (Ok(a), Ok(b)) => (a, b),
-        _ => return write_to_file(&output, "ERROR: Either x or y are not numbers".to_string()),
+        _ => return write_to_file(&output, "ERROR: Either x or y are not numbers"),
     };
 
     let mut board = match Board::new(input) {
-        Err(e) => return write_to_file(&output, e),
+        Err(e) => return write_to_file(&output, &e),
         Ok(board) => board,
     };
 
     board.pop((x, y));
 
     match board.save(&output) {
-        Err(e) => write_to_file(&output, e),
+        Err(e) => write_to_file(&output, &e),
         Ok(_) => Ok(()),
     }
 }

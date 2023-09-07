@@ -23,28 +23,25 @@ fn save() {
 }
 
 #[test]
-fn complete_example_1() -> Result<(), ()> {
+fn complete_example_1() {
     let mut board = Board::new("tests/boards/1.txt").unwrap();
     let s = read_to_string("tests/boards/1R.txt").unwrap();
     board.pop((0, 0));
     assert_eq!(s, board.to_string());
-    Ok(())
 }
 
 #[test]
-fn complete_example_2() -> Result<(), ()> {
+fn complete_example_2() {
     let mut board = Board::new("tests/boards/2.txt").unwrap();
     let s = read_to_string("tests/boards/2R.txt").unwrap();
     board.pop((2, 4));
     assert_eq!(s, board.to_string());
-    Ok(())
 }
 
 #[test]
-fn complete_example_3() -> Result<(), ()> {
+fn complete_example_3() {
     let mut board = Board::new("tests/boards/3.txt").unwrap();
     let s = read_to_string("tests/boards/3R.txt").unwrap();
     board.pop((0, 4));
     assert_eq!(s, board.to_string());
-    Ok(())
 }
