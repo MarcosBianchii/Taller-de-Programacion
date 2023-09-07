@@ -1,0 +1,7 @@
+_ R _ R _ R _
+_ W _ W _ W _
+_ B1 _ B2 _ B3 _
+_ W _ W _ W _
+_ F1 _ F2 _ F3 _
+_ W _ W _ W _
+_ DU _ DD _ DR _
