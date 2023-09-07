@@ -8,7 +8,7 @@
 
 [Bomberman](https://es.wikipedia.org/wiki/Bomberman) es una franquicia de videojuegos originalmente desarrollada por Hudson Soft en 1983 para PC, y posteriormente para Famicon. Esta franquicia ha tenido un gran éxito en Japon, aunque este no es tan grande en Occidente. Bomberman ha sido la mascota de Hudson Soft a lo largo de toda su historia, hasta su absorción por parte de Konami en 2012.
 
-[Intro](images/1.png)
+![Intro](images/1.png)
 
 Su sistema de juego es sencillo: Bomberman (si, el nombre del protagonista es el mismo que el del juego) debe atravesar un laberinto repleto de rocas y paredes, mientras se enfrenta a diversos enemigos. Para acabar con ellos, Bomberman dispone de bombas que, al ser detonadas, explotan emitiendo una ráfaga de fuego en direcciones verticales y horizontales. Si la ráfaga de fuego alcanza a uno de los enemigos, este es ~brutalmente incinerado~ derrotado. Para ganar, Bomberman debe derrotar a todos los enemigos del laberinto.
 
@@ -62,7 +62,7 @@ _ W _ W _ W _
 _ _ _ _ _ _ _
 ```
 
-[Ejemplo1](images/2.png)
+![Ejemplo1](images/2.png)
 
 Si detonamos la bomba en la coordenada (0, 0), que posee un alcance de 2, la rafaga impactara sobre la bomba en (0, 2) con alcance de 5, la cual impactara en la bomba con coordenada en (4, 2) con alcance 2, que finalmente impactara en el enemigo (que posee 1 vida), derrotandolo.
 
@@ -90,7 +90,7 @@ _ W _ W _ W _
 _ _ _ _ _ _ B1
 ```
 
-[Ejemplo2](images/3.png)
+![Ejemplo2](images/3.png)
 
 Si detonamos la bomba en (2, 4), el camino de bombas detonadas sera:
 
@@ -126,7 +126,7 @@ _ W _ W _ W _
 _ _ _ _ _ _ _
 ```
 
-[Ejemplo3](images/4.png)
+![Ejemplo3](images/4.png)
 
 Si detonamos la bomba en (0, 4), los caminos de bombas detonadas seran:
 
