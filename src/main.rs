@@ -6,10 +6,10 @@ use std::io;
 use std::io::{BufWriter, Write};
 
 /// Funcion que formatea el path de output del programa.
-fn fmt_output(input: &str, output: &String) -> String {
+fn fmt_output(input: &str, output: &str) -> String {
     match input.split('/').nth_back(0) {
         Some(name) => String::from(output) + "/" + name,
-        None => unreachable!("input always has at least 1 item"),
+        None => String::from(output),
     }
 }
 
