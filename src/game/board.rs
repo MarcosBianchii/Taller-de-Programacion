@@ -68,12 +68,12 @@ impl Board {
     /// Guarda el tablero en path.
     pub fn save(&self, path: &str) -> Result<(), String> {
         let f = match File::create(path) {
-            Err(_) => return Err("ERROR: Output is invalid".to_string()),
+            Err(_) => return Err("ERROR: Creating file".to_string()),
             Ok(file) => file,
         };
 
         match BufWriter::new(f).write_all(self.to_string().as_bytes()) {
-            Err(_) => Err("ERROR: Output is invalid".to_string()),
+            Err(_) => Err("ERROR: Writing to file".to_string()),
             Ok(_) => Ok(()),
         }
     }

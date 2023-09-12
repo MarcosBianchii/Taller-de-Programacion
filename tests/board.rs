@@ -8,6 +8,11 @@ fn invalid_path() {
 }
 
 #[test]
+fn invalid_board_shape() {
+    assert!(Board::new("tests/boards/invalid.txt").is_err());
+}
+
+#[test]
 fn read_from_file() {
     let board = Board::new("tests/boards/1.txt").unwrap();
     let s = read_to_string("tests/boards/1.txt").unwrap();
