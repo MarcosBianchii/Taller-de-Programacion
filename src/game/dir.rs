@@ -1,5 +1,7 @@
-use std::fmt;
-use std::fmt::{Display, Formatter};
+use std::{
+    fmt::{self, Display, Formatter},
+    str::FromStr,
+};
 
 /// Enum que representa un
 /// sentido de dirección.
@@ -9,19 +11,6 @@ pub enum Dir {
     Down,
     Left,
     Right,
-    None,
-}
-
-impl From<&str> for Dir {
-    fn from(c: &str) -> Self {
-        match c.to_uppercase().chars().next() {
-            Some('U') => Dir::Up,
-            Some('D') => Dir::Down,
-            Some('L') => Dir::Left,
-            Some('R') => Dir::Right,
-            _ => Dir::None,
-        }
-    }
 }
 
 impl Display for Dir {
@@ -31,23 +20,54 @@ impl Display for Dir {
             Dir::Down => "D",
             Dir::Left => "L",
             Dir::Right => "R",
-            Dir::None => "_",
         };
 
         write!(f, "{c}")
     }
 }
 
-impl Dir {
-    /// Funcion que devuelve un punto
-    /// movido en dirección self.
-    pub fn move_pos(&self, pos: (i8, i8)) -> (i8, i8) {
-        match self {
-            Dir::Up => (pos.0, pos.1 - 1),
-            Dir::Down => (pos.0, pos.1 + 1),
-            Dir::Left => (pos.0 - 1, pos.1),
-            Dir::Right => (pos.0 + 1, pos.1),
-            Dir::None => pos,
+impl FromStr for Dir {
+    type Err = &'static str;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s.to_uppercase().chars().next() {
+            Some('U') => Ok(Dir::Up),
+            Some('D') => Ok(Dir::Down),
+            Some('L') => Ok(Dir::Left),
+            Some('R') => Ok(Dir::Right),
+            _ => Err("ERROR: Invalid Direction char"),
         }
+    }
+}
+
+impl Dir {
+    /// Función que devuelve un punto
+    /// movido en dirección self.
+    pub fn move_pos(&self, pos: (i32, i32)) -> (i32, i32) {
+        match self {
+            Dir::Up => (pos.0 - 1, pos.1),
+            Dir::Down => (pos.0 + 1, pos.1),
+            Dir::Left => (pos.0, pos.1 - 1),
+            Dir::Right => (pos.0, pos.1 + 1),
+        }
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::Dir;
+
+    #[test]
+    fn move_pos() {
+        let pos = (1, 1);
+        assert_eq!(Dir::Up.move_pos(pos), (0, 1));
+        assert_eq!(Dir::Down.move_pos(pos), (2, 1));
+        assert_eq!(Dir::Left.move_pos(pos), (1, 0));
+        assert_eq!(Dir::Right.move_pos(pos), (1, 2));
+
+        let pos = (0, 0);
+        assert_eq!(Dir::Up.move_pos(pos), (-1, 0));
+        assert_eq!(Dir::Down.move_pos(pos), (1, 0));
+        assert_eq!(Dir::Left.move_pos(pos), (0, -1));
+        assert_eq!(Dir::Right.move_pos(pos), (0, 1));
     }
 }
