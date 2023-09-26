@@ -182,7 +182,7 @@ mod test {
     #[test]
     fn invalid_path() {
         assert!(Board::new("invalid_path.txt").is_err());
-        assert!(Board::new("").is_err())
+        assert!(Board::new("").is_err());
     }
 
     #[test]
