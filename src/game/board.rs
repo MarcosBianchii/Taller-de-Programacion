@@ -202,8 +202,8 @@ mod test {
     #[test]
     fn save() {
         let board = Board::new("src/game/test_boards/savetest.txt").unwrap();
-        board.save("output/savetest.txt").unwrap();
         let s = fs::read_to_string("output/savetest.txt").unwrap();
+        board.save("output/savetest.txt").unwrap();
         assert_eq!(board.to_string(), s);
     }
 }
