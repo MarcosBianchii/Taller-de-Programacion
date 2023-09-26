@@ -1,5 +1,4 @@
-use super::dir::Dir;
-use super::obj::Obj;
+use super::{dir::Dir, obj::Obj};
 use std::{
     collections::{HashMap, HashSet},
     fmt::{self, Display, Formatter},
