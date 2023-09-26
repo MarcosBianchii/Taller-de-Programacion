@@ -66,7 +66,7 @@ impl Board {
     /// Instancia un tablero desde un archivo.
     pub fn new(input: &str) -> Result<Board, &'static str> {
         match fs::read_to_string(input) {
-            Err(_) => return Err("ERROR: Input file not found"),
+            Err(_) => Err("ERROR: Input file not found"),
             Ok(content) => Self::from_str(&content),
         }
     }
