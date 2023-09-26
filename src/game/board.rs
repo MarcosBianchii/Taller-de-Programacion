@@ -86,10 +86,9 @@ impl Board {
         // Devolver None si la posición está vacia.
         let mut cell = self.board.get_mut(&pos)?;
         match (bomb, &mut cell) {
-            (Obj::BreakBomb(_), Obj::Rock) => (),
+            (Obj::BreakBomb(_), Obj::Rock) | (_, Obj::Empty) => (),
             (_, Obj::BreakBomb(_) | Obj::Bomb(_)) => self.explode(pos),
             (_, Obj::Detour(new_dir)) => *dir = new_dir.clone(),
-            (_, Obj::Empty) => (),
             (_, Obj::Enemy(hp)) => match hp {
                 1 => *cell = Obj::Empty,
                 _ => *hp -= 1,
