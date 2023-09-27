@@ -75,7 +75,7 @@ impl Board {
         let f = File::create(path).map_err(|_| "ERROR: Creating file")?;
         BufWriter::new(f)
             .write_all(self.to_string().as_bytes())
-            .map_err(|_| "Error: Writing to file")
+            .map_err(|_| "ERROR: Writing to file")
     }
 
     /// Procedimiento que ejecuta la interacción entre una bomba y otro objeto.
@@ -158,7 +158,7 @@ impl Board {
         // hay un Obj de tipo Bomb o BreakBomb.
         match self.board.get(&pos) {
             Some(Obj::Bomb(_) | Obj::BreakBomb(_)) => self.explode(pos),
-            _ => return Err("Error: Invalid coordinates"),
+            _ => return Err("ERROR: Invalid coordinates"),
         }
 
         Ok(())
@@ -200,8 +200,8 @@ mod test {
     #[test]
     fn save() {
         let board = Board::new("src/game/test_boards/savetest.txt").unwrap();
-        let s = fs::read_to_string("output/savetest.txt").unwrap();
         board.save("output/savetest.txt").unwrap();
+        let s = fs::read_to_string("output/savetest.txt").unwrap();
         assert_eq!(board.to_string(), s);
     }
 }
