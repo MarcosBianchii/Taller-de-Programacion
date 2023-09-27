@@ -44,7 +44,7 @@ impl FromStr for Obj {
             ("R", "") => Obj::Rock,
             ("W", "") => Obj::Wall,
             ("_", "") => Obj::Empty,
-            (_, _) => return Err("ERROR: Invalid entry in matrix"),
+            _ => return Err("ERROR: Invalid entry in matrix"),
         })
     }
 }

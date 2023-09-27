@@ -18,6 +18,15 @@ pub struct Board {
     n: usize,
 }
 
+// Enum que representa la acción que
+// va a tomar la función obj_interact.
+enum InteractResult {
+    Continue,
+    Stop,
+}
+
+use InteractResult::{Continue, Stop};
+
 impl Display for Board {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         let mut output_str = String::new();
@@ -79,11 +88,15 @@ impl Board {
     }
 
     /// Procedimiento que ejecuta la interacción entre una bomba y otro objeto.
-    /// Devuelve Some(()) en caso de tener que seguir iterando sobre el tablero
-    /// y None en caso de querer cortar la expansión.
-    fn obj_interact(&mut self, bomb: &Obj, pos: (i32, i32), dir: &mut Dir) -> Option<()> {
-        // Devolver None si la posición está vacia.
-        let mut cell = self.board.get_mut(&pos)?;
+    /// Devuelve Continue en caso de tener que seguir iterando sobre el tablero
+    /// y Stop en caso de querer cortar la explosión.
+    fn obj_interact(&mut self, bomb: &Obj, pos: (i32, i32), dir: &mut Dir) -> InteractResult {
+        // Devolver Stop si la posición está vacia.
+        let mut cell = match self.board.get_mut(&pos) {
+            None => return Stop,
+            Some(obj) => obj,
+        };
+
         match (bomb, &mut cell) {
             (Obj::BreakBomb(_), Obj::Rock) | (_, Obj::Empty) => (),
             (_, Obj::BreakBomb(_) | Obj::Bomb(_)) => self.explode(pos),
@@ -92,10 +105,10 @@ impl Board {
                 1 => *cell = Obj::Empty,
                 _ => *hp -= 1,
             },
-            (_, _) => return None,
+            _ => return Stop,
         }
 
-        Some(())
+        Continue
     }
 
     /// Procedimiento que propaga
@@ -112,12 +125,10 @@ impl Board {
         // Se fija si esta explosión
         // ya pasó por esta celda.
         if !steps.contains(&pos) {
-            match self.obj_interact(bomb, pos, &mut dir) {
-                None => return,
-                Some(_) => (),
-            }
-
             steps.insert(pos);
+            if let Stop = self.obj_interact(bomb, pos, &mut dir) {
+                return;
+            }
         }
 
         // Si el rango es 0 entonces la
@@ -135,14 +146,14 @@ impl Board {
     /// su explosion hacia los 4 lados.
     fn explode(&mut self, pos: (i32, i32)) {
         if let Some(bomb) = self.board.remove(&pos) {
+            self.board.insert(pos, Obj::Empty);
+
             let range = match bomb {
                 Obj::Bomb(range) | Obj::BreakBomb(range) => range,
                 _ => return,
             };
 
-            self.board.insert(pos, Obj::Empty);
             let mut set = HashSet::with_capacity(2 * self.n);
-
             self.propagate(&mut set, pos, &bomb, range, Dir::Up);
             self.propagate(&mut set, pos, &bomb, range, Dir::Down);
             self.propagate(&mut set, pos, &bomb, range, Dir::Left);
@@ -154,8 +165,8 @@ impl Board {
     /// e inicializa la explosión de la bomba.
     pub fn pop(&mut self, pos: (i32, i32)) -> Result<(), &'static str> {
         let pos = (pos.1, pos.0);
-        // Verificar que en la posición dada
-        // hay un Obj de tipo Bomb o BreakBomb.
+        // Verificar que en la posición dada hay un Obj de tipo Bomb
+        // o BreakBomb.
         match self.board.get(&pos) {
             Some(Obj::Bomb(_) | Obj::BreakBomb(_)) => self.explode(pos),
             _ => return Err("ERROR: Invalid coordinates"),

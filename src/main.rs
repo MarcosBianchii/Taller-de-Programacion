@@ -26,11 +26,9 @@ fn parse_pos(x: &str, y: &str) -> Result<(i32, i32), &'static str> {
             .map_err(|_| "ERROR: Invalid position arguments")
     };
 
-    let x = parse(x)?;
-    let y = parse(y)?;
-    match (x, y) {
-        (0.., 0..) => Ok((x, y)),
-        (_, _) => Err("ERROR: Position should be positive for both arguments"),
+    match (parse(x)?, parse(y)?) {
+        (x @ 0.., y @ 0..) => Ok((x, y)),
+        _ => Err("ERROR: Position should be positive for both arguments"),
     }
 }
 
