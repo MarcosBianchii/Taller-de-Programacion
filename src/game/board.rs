@@ -51,7 +51,7 @@ impl FromStr for Board {
     type Err = &'static str;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let n = s.lines().count();
-        let mut board = BoardMap::new();
+        let mut board = BoardMap::with_capacity(n * n);
         // Itera las lineas del archivo separando por espacios
         // para obtener los objetos y sus coordenadas.
         for (i, line) in s.lines().enumerate() {
@@ -132,7 +132,7 @@ impl Board {
         }
 
         // Si el rango es 0 entonces la
-        // proxima llamada no es válida.
+        // proxima llamada es inválida.
         if range == 0 {
             return;
         }
@@ -153,7 +153,7 @@ impl Board {
                 _ => return,
             };
 
-            let mut set = HashSet::with_capacity(2 * self.n);
+            let mut set = HashSet::with_capacity(4 * range as usize);
             self.propagate(&mut set, pos, &bomb, range, Dir::Up);
             self.propagate(&mut set, pos, &bomb, range, Dir::Down);
             self.propagate(&mut set, pos, &bomb, range, Dir::Left);
