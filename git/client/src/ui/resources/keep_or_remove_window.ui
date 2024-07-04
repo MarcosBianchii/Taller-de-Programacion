@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.40.0 -->
+<interface>
+  <requires lib="gtk+" version="3.24"/>
+  <object class="GtkApplicationWindow" id="main_window">
+    <property name="can-focus">False</property>
+    <child>
+      <object class="GtkFixed" id="application_fixed">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <child>
+          <object class="GtkButton" id="keep_button">
+            <property name="label" translatable="yes">Mantener</property>
+            <property name="width-request">84</property>
+            <property name="height-request">34</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+          </object>
+          <packing>
+            <property name="x">85</property>
+            <property name="y">152</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="delete_button">
+            <property name="label" translatable="yes">Eliminar</property>
+            <property name="width-request">84</property>
+            <property name="height-request">34</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+          </object>
+          <packing>
+            <property name="x">179</property>
+            <property name="y">152</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkTextView" id="path_text_view">
+            <property name="width-request">370</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="editable">False</property>
+            <property name="justification">center</property>
+            <property name="cursor-visible">False</property>
+          </object>
+          <packing>
+            <property name="x">-21</property>
+            <property name="y">62</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="keep_or_delete_label">
+            <property name="width-request">100</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">¿Desea mantener o eliminar el siguiente archivo?</property>
+          </object>
+          <packing>
+            <property name="x">43</property>
+            <property name="y">39</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
